@@ -2,6 +2,7 @@ using Abp.AspNetCore.TestBase;
 using Abp.Modules;
 using Abp.Reflection.Extensions;
 using KrakenStartup.Web.Startup;
+
 namespace KrakenStartup.Web.Tests
 {
     [DependsOn(

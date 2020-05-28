@@ -1,0 +1,11 @@
+﻿{
+    "culture": "pt-BR",
+    "texts": {
+        "HelloWorld": "Olá, mundo!",
+        "ChangeLanguage": "Alterar idioma",
+        "HomePage": "Página inicial",
+        "About": "Sobre",
+        "Home_Description": "Bem-vindo ao KrakenStartup...",
+        "About_Description": "Este é um modelo de inicialização simples para usar o ASP.NET Core com estrutura ABP."
+    }
+}
