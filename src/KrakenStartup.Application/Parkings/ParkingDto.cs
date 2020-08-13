@@ -4,19 +4,20 @@ using Abp.AutoMapper;
 
 namespace KrakenStartup.Parkings
 {
-    public class ParkingCoordinatesInput
+    public class SearchParkingInput : ILimitedResultRequest
     {
         [Required]
-        [StringLength(3)]
-        public string Lat { get; set; }
+        public double Latitude { get; set; }
 
         [Required]
-        [StringLength(3)]
-        public string Long { get; set; }
+        public double Longitude { get; set; }
+
+        [Range(1, 50)]
+        public double MaxDistance { get; set; }
 
         [Required]
         [Range(1, 20)]
-        public int Limit { get; set; }
+        public int MaxResultCount { get; set; }
     }
 
     [AutoMapTo(typeof(Parking))]

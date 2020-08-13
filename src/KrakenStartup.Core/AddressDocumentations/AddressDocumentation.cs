@@ -29,12 +29,10 @@ namespace KrakenStartup.AddressDocumentations
         public DocumentationStatus Status { get; set; }
 
         [Required]
-        [StringLength(10)]
-        public string Latitude { get; set; }
+        public double Latitude { get; set; }
 
         [Required]
-        [StringLength(10)]
-        public string Longitude { get; set; }
+        public double Longitude { get; set; }
 
         [Required]
         [StringLength(100)]

@@ -5,6 +5,6 @@ namespace KrakenStartup.Parkings
 {
     public interface IParkingAppService : IApplicationService
     {
-        ListResultDto<ParkingDto> GetParkingListByPerimeter(ParkingCoordinatesInput coordinatesInput);
+        ListResultDto<ParkingDto> GetParkingListByPerimeter(SearchParkingInput input);
     }
 }
