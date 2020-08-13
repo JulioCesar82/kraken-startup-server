@@ -10,6 +10,7 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Logging;
+using Microsoft.OpenApi.Models;
 
 namespace KrakenStartup.Web.Startup
 {
@@ -27,6 +28,12 @@ namespace KrakenStartup.Web.Startup
             {
                 options.Filters.Add(new AutoValidateAntiforgeryTokenAttribute());
             }).AddNewtonsoftJson();
+
+            services.AddSwaggerGen(options =>
+            {
+                options.SwaggerDoc("v1", new OpenApiInfo { Title = "Kraken API", Version = "v1" });
+                options.DocInclusionPredicate((docName, description) => true);
+            });
 
             //Configure Abp and Dependency Injection
             return services.AddAbp<KrakenStartupWebModule>(options =>
@@ -51,6 +58,14 @@ namespace KrakenStartup.Web.Startup
             {
                 app.UseExceptionHandler("/Error");
             }
+
+            app.UseSwagger();
+            //Enable middleware to serve swagger - ui assets(HTML, JS, CSS etc.)
+            app.UseSwaggerUI(options =>
+            {
+                options.SwaggerEndpoint("/swagger/v1/swagger.json", "Kraken API V1");
+                //options.RoutePrefix = string.Empty;
+            }); //URL: /swagger 
 
             app.UseStaticFiles();
             app.UseRouting();
