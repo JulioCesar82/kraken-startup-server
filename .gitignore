@@ -3,7 +3,7 @@
 [Oo]bj/
 
 # Logs
-Logs/*
+**/*/Logs/*
 
 # Generated files
 project.lock.json

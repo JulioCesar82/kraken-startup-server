@@ -1,12 +1,15 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Net.Http;
+using System.Threading.Tasks;
 using Abp.Application.Services;
 using Abp.Application.Services.Dto;
 using Abp.Domain.Repositories;
 using Abp.ObjectMapping;
 using KrakenStartup.AddressDocumentations;
 using Microsoft.EntityFrameworkCore;
+using Newtonsoft.Json;
 
 namespace KrakenStartup.Parkings
 {
@@ -24,7 +27,7 @@ namespace KrakenStartup.Parkings
             LocalizationSourceName = "Parking";
         }
 
-        public ListResultDto<ParkingDto> GetParkingListByPerimeter(SearchParkingInput input)
+        public async Task<ListResultDto<SearchParkingOutput>> GetParkingListByPerimeter(SearchParkingInput input)
         {
             var entity = _parkingRepository
                 .GetAll()
@@ -35,16 +38,48 @@ namespace KrakenStartup.Parkings
                 .Where(x => GetDistance(
                     x.AddressDocumentation, 
                     input.Latitude, 
-                    input.Longitude) > input.MaxDistance)
+                    input.Longitude) < input.MaxDistance)
+                .Take(input.MaxResultCount)
+                .OrderBy(x => GetDistance(
+                    x.AddressDocumentation,
+                    input.Latitude,
+                    input.Longitude))
                 .ToListAsync();
 
             // TODO: Chamar API da HERE passando todos os enderecos e o ponto de destino (input)
-
+            var test = await GetDistanceByHereApi(input.Latitude, input.Longitude);
 
             //Convert to DTOs
-            var parkingDtoList = _objectMapper.Map<List<ParkingDto>>(parkingEntityList);
+            var parkingDtoList = _objectMapper.Map<List<SearchParkingOutput>>(parkingEntityList);
 
-            return new ListResultDto<ParkingDto>(parkingDtoList);
+            return new ListResultDto<SearchParkingOutput>(parkingDtoList);
+        }
+
+        private async Task<List<MatrixEntry>> GetDistanceByHereApi(double latitude, double longitude)
+        {
+            const string hereApiKey = "Gwecv9sAyqQimIdyQoM7AM8kGU21hk02I_hA5-_KKnU";
+
+            using (var client = new HttpClient())
+            {
+                var url = new Uri($"https://matrix.route.ls.hereapi.com/routing/7.2/calculatematrix.json?" +
+                    "apiKey={hereApiKey}" +
+                    "&mode=fastest" +
+                    "&destination0={latitude},{longitude}" +
+                    "&start0=-23.469437,-46.533096" +
+                    "&start1=-23.469709,-46.532565");
+
+                var response = await client.GetAsync(url);
+
+                string json;
+                using (var content = response.Content)
+                {
+                    json = await content.ReadAsStringAsync();
+                }
+
+                var routingResponse = JsonConvert.DeserializeObject<HereRoutingResponse>(json);
+
+                return routingResponse.response.matrixEntry;
+            }
         }
 
         private static double GetDistance(AddressDocumentation o, double latitude, double longitude)

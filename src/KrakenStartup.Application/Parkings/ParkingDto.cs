@@ -1,6 +1,7 @@
 ﻿using System.ComponentModel.DataAnnotations;
 using Abp.Application.Services.Dto;
 using Abp.AutoMapper;
+using KrakenStartup.AddressDocumentations;
 
 namespace KrakenStartup.Parkings
 {
@@ -20,6 +21,11 @@ namespace KrakenStartup.Parkings
         public int MaxResultCount { get; set; }
     }
 
+    public class SearchParkingOutput : ParkingDto
+    {
+        public double Distance { get; set; }
+    }
+
     [AutoMapTo(typeof(Parking))]
     public class ParkingDto : EntityDto
     {
@@ -29,6 +35,6 @@ namespace KrakenStartup.Parkings
 
         public decimal AmountMoney { get; set; }
 
-        public int AddressDocumentId { get; set; }
+        public AddressDocumentationDto AddressDocument { get; set; }
     }
 }
