@@ -2,19 +2,22 @@
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
-using Abp.Domain.Entities;
 using Abp.Domain.Entities.Auditing;
 using KrakenStartup.UsersCreditCards;
 
 namespace KrakenStartup.CreditCards
 {
     [Table("CREDITCARD")]
-    public class CreditCard : Entity, IHasCreationTime
+    public class CreditCard : AuditedEntity, IHasCreationTime
     {
         public CreditCard()
         {
             UserCreditCard = new HashSet<UserCreditCard>();
         }
+
+        //[Key]
+        //[DatabaseGenerated(DatabaseGeneratedOption.Identity)]
+        //public int CreditCardId { get; set; }
 
         [Required]
         public CreditCardType Type { get; set; }
@@ -28,12 +31,15 @@ namespace KrakenStartup.CreditCards
         public string Credential { get; set; }
 
         [Required]
-        public bool Enable { get; set; }
+        [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
+        public bool Enable { get; set; } = true;
 
         [Required]
-        public DateTime CreationTime { get; set; }
+        [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
+        public DateTime CreationTime { get; set; } = DateTime.UtcNow;
 
-        public DateTime? UpdatedTime { get; set; }
+        [DatabaseGenerated(DatabaseGeneratedOption.Computed)]
+        public DateTime? UpdatedTime { get; set; } = DateTime.UtcNow;
 
         [InverseProperty(nameof(UsersCreditCards.UserCreditCard.CreditCard))]
         public virtual ICollection<UserCreditCard> UserCreditCard { get; set; }

@@ -1,4 +1,4 @@
-﻿using System;
+﻿    using System;
 using Abp.AspNetCore;
 using Abp.Castle.Logging.Log4Net;
 using Abp.EntityFrameworkCore;
@@ -26,7 +26,7 @@ namespace KrakenStartup.Web.Startup
 
             services.AddControllersWithViews(options =>
             {
-                options.Filters.Add(new AutoValidateAntiforgeryTokenAttribute());
+                //options.Filters.Add(new AutoValidateAntiforgeryTokenAttribute());
             }).AddNewtonsoftJson();
 
             services.AddSwaggerGen(options =>
@@ -45,7 +45,7 @@ namespace KrakenStartup.Web.Startup
             });
         }
 
-        public void Configure(IApplicationBuilder app, IWebHostEnvironment env, ILoggerFactory loggerFactory)
+        public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
         {
             app.UseAbp(); //Initializes ABP framework.
 
@@ -58,6 +58,7 @@ namespace KrakenStartup.Web.Startup
             {
                 app.UseExceptionHandler("/Error");
             }
+
 
             app.UseSwagger();
             //Enable middleware to serve swagger - ui assets(HTML, JS, CSS etc.)

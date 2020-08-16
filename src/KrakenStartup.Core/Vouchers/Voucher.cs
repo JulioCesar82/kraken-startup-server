@@ -16,6 +16,10 @@ namespace KrakenStartup.Vouchers
             UserVoucher = new HashSet<UserVoucher>();
         }
 
+        //[Key]
+        //[DatabaseGenerated(DatabaseGeneratedOption.Identity)]
+        //public int VoucherId { get; set; }
+
         [Column(TypeName = "decimal(5, 2)")]
         public decimal? AmountMoney { get; set; }
 
@@ -29,12 +33,15 @@ namespace KrakenStartup.Vouchers
         public bool SingleUse { get; set; }
 
         [Required]
-        public bool Enable { get; set; }
+        [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
+        public bool Enable { get; set; } = true;
 
         [Required]
-        public DateTime CreationTime { get; set; }
+        [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
+        public DateTime CreationTime { get; set; } = DateTime.UtcNow;
 
-        public DateTime? UpdatedTime { get; set; }
+        [DatabaseGenerated(DatabaseGeneratedOption.Computed)]
+        public DateTime? UpdatedTime { get; set; } = DateTime.UtcNow;
 
         [InverseProperty(nameof(UsersVouchers.UserVoucher.Voucher))]
         public virtual ICollection<UserVoucher> UserVoucher { get; set; }

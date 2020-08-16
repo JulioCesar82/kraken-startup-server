@@ -1,10 +1,10 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
+﻿using Abp.Application.Services.Dto;
+using Abp.AutoMapper;
 
 namespace KrakenStartup.AddressDocumentations
 {
-    public class AddressDocumentationDto
+    [AutoMapTo(typeof(AddressDocumentation))]
+    public class AddressDocumentationDto : EntityDto
     {
         public string NickName { get; set; }
 

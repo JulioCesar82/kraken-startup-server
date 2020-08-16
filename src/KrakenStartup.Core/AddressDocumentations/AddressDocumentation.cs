@@ -19,6 +19,10 @@ namespace KrakenStartup.AddressDocumentations
             UserProfile = new HashSet<UserProfile>();
         }
 
+        //[Key]
+        //[DatabaseGenerated(DatabaseGeneratedOption.Identity)]
+        //public int AddressDocumentationId { get; set; }
+        
         [StringLength(50)]
         public string NickName { get; set; }
 
@@ -26,7 +30,8 @@ namespace KrakenStartup.AddressDocumentations
         public AddressDocumentationType Type { get; set; }
 
         [Required]
-        public DocumentationStatus Status { get; set; }
+        [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
+        public DocumentationStatus Status { get; set; } = DocumentationStatus.Pending;
 
         [Required]
         public double Latitude { get; set; }
@@ -58,12 +63,15 @@ namespace KrakenStartup.AddressDocumentations
         public string NeighborhoodName { get; set; }
 
         [Required]
-        public bool Enable { get; set; }
+        [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
+        public bool Enable { get; set; } = true;
 
         [Required]
-        public DateTime CreationTime { get; set; }
+        [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
+        public DateTime CreationTime { get; set; } = DateTime.UtcNow;
 
-        public DateTime? UpdatedTime { get; set; }
+        [DatabaseGenerated(DatabaseGeneratedOption.Computed)]
+        public DateTime? UpdatedTime { get; set; } = DateTime.UtcNow;
 
         [InverseProperty(nameof(Parkings.Parking.AddressDocumentation))]
         public virtual ICollection<Parking> Parking { get; set; }

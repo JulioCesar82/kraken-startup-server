@@ -19,11 +19,16 @@ namespace KrakenStartup.UsersCreditCards
             ParkingTransaction = new HashSet<ParkingTransaction>();
         }
 
+        //[Key]
+        //[DatabaseGenerated(DatabaseGeneratedOption.Identity)]
+        //public int UserCreditCardId { get; set; }
+
         [StringLength(50)]
         public string NickName { get; set; }
 
         [Required]
-        public DocumentationStatus Status { get; set; }
+        [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
+        public DocumentationStatus Status { get; set; } = DocumentationStatus.Pending;
 
         [Required]
         public DateTime ValidTime { get; set; }
@@ -41,12 +46,15 @@ namespace KrakenStartup.UsersCreditCards
         public int CreditCardId { get; set; }
 
         [Required]
-        public bool Enable { get; set; }
+        [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
+        public bool Enable { get; set; } = true;
 
         [Required]
-        public DateTime CreationTime { get; set; }
+        [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
+        public DateTime CreationTime { get; set; } = DateTime.UtcNow;
 
-        public DateTime? UpdatedTime { get; set; }
+        [DatabaseGenerated(DatabaseGeneratedOption.Computed)]
+        public DateTime? UpdatedTime { get; set; } = DateTime.UtcNow;
 
         [InverseProperty(nameof(CreditCards.CreditCard.UserCreditCard))]
         public virtual CreditCard CreditCard { get; set; }

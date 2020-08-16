@@ -11,11 +11,16 @@ namespace KrakenStartup.DriverDocumentations
     [Table("DRIVERDOCUMENTATION")]
     public class DriverDocumentation : Entity, IHasCreationTime
     {
+        //[Key]
+        //[DatabaseGenerated(DatabaseGeneratedOption.Identity)]
+        //public int DriverDocumentationId { get; set; }
+
         [Required]
         public DriverDocumentationType Type { get; set; }
 
         [Required]
-        public DocumentationStatus Status { get; set; }
+        [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
+        public DocumentationStatus Status { get; set; } = DocumentationStatus.Pending;
 
         [Required]
         public DateTime ValidTime { get; set; }
@@ -28,12 +33,15 @@ namespace KrakenStartup.DriverDocumentations
         public string StorageId { get; set; }
 
         [Required]
-        public bool Enable { get; set; }
+        [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
+        public bool Enable { get; set; } = true;
 
         [Required]
-        public DateTime CreationTime { get; set; }
+        [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
+        public DateTime CreationTime { get; set; } = DateTime.UtcNow;
 
-        public DateTime? UpdatedTime { get; set; }
+        [DatabaseGenerated(DatabaseGeneratedOption.Computed)]
+        public DateTime? UpdatedTime { get; set; } = DateTime.UtcNow;
 
         [InverseProperty(nameof(UsersProfile.UserProfile.DriverDocumentation))]
         public virtual UserProfile UserProfile { get; set; }

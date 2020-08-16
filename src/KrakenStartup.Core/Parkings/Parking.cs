@@ -18,6 +18,10 @@ namespace KrakenStartup.Parkings
             ParkingSchedule = new HashSet<ParkingSchedule>();
         }
 
+        //[Key]
+        //[DatabaseGenerated(DatabaseGeneratedOption.Identity)]
+        //public int? ParkingId { get; set; }
+
         [StringLength(50)]
         public string NickName { get; set; }
 
@@ -35,15 +39,18 @@ namespace KrakenStartup.Parkings
 
         [Required]
         [ForeignKey(nameof(AddressDocumentation))]
-        public int AddressDocumentId { get; set; }
+        public int AddressDocumentationId { get; set; }
 
         [Required]
-        public bool Enable { get; set; }
+        [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
+        public bool Enable { get; set; } = true;
 
         [Required]
-        public DateTime CreationTime { get; set; }
+        [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
+        public DateTime CreationTime { get; set; } = DateTime.UtcNow;
 
-        public DateTime? UpdatedTime { get; set; }
+        [DatabaseGenerated(DatabaseGeneratedOption.Computed)]
+        public DateTime? UpdatedTime { get; set; } = DateTime.UtcNow;
 
         [InverseProperty(nameof(AddressDocumentations.AddressDocumentation.Parking))]
         public virtual AddressDocumentation AddressDocumentation { get; set; }

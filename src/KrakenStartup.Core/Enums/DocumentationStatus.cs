@@ -2,7 +2,7 @@
 {
     public enum DocumentationStatus : byte
     {
-        Status,
+        Pending,
         Approved,
         Rejected,
         Expired

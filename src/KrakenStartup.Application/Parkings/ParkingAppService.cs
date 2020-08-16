@@ -9,7 +9,8 @@ using Abp.Domain.Repositories;
 using Abp.ObjectMapping;
 using KrakenStartup.AddressDocumentations;
 using Microsoft.EntityFrameworkCore;
-using Newtonsoft.Json;
+using Castle.Core.Logging;
+using KrakenStartup.ThirdParty.HereMap;
 
 namespace KrakenStartup.Parkings
 {
@@ -17,24 +18,26 @@ namespace KrakenStartup.Parkings
     {
         private readonly IRepository<Parking> _parkingRepository;
         private readonly IObjectMapper _objectMapper;
+        public ILogger Logger { get; set; }
 
         public ParkingAppService(IRepository<Parking> parkingRepository, IObjectMapper objectMapper) 
             : base(parkingRepository)
         {
             _parkingRepository = parkingRepository;
             _objectMapper = objectMapper;
+            Logger = NullLogger.Instance;
+            //Logger.Info("GetParkingListByPerimeter");
 
             LocalizationSourceName = "Parking";
         }
 
         public async Task<ListResultDto<SearchParkingOutput>> GetParkingListByPerimeter(SearchParkingInput input)
         {
-            var entity = _parkingRepository
-                .GetAll()
+            var entity = _parkingRepository.GetAll()
                 .Include(x => x.AddressDocumentation);
 
             //Get entities
-            var parkingEntityList = entity
+            var parkingEntityList = await entity
                 .Where(x => GetDistance(
                     x.AddressDocumentation, 
                     input.Latitude, 
@@ -46,40 +49,31 @@ namespace KrakenStartup.Parkings
                     input.Longitude))
                 .ToListAsync();
 
-            // TODO: Chamar API da HERE passando todos os enderecos e o ponto de destino (input)
-            var test = await GetDistanceByHereApi(input.Latitude, input.Longitude);
+            if (parkingEntityList.Count == 0)
+            {
+                return new ListResultDto<SearchParkingOutput>();
+            }
+
+            var addressLocalizationList = parkingEntityList.Select(x => new HereAddressLocalization {
+                    Latitude = x.AddressDocumentation.Latitude,
+                    Longitude = x.AddressDocumentation.Longitude
+                })
+                .ToList();
+
+            var addressDistanceList = await HereMapService.GetDistanceByHereApi(input.Latitude, input.Longitude, addressLocalizationList);
 
             //Convert to DTOs
             var parkingDtoList = _objectMapper.Map<List<SearchParkingOutput>>(parkingEntityList);
 
-            return new ListResultDto<SearchParkingOutput>(parkingDtoList);
-        }
-
-        private async Task<List<MatrixEntry>> GetDistanceByHereApi(double latitude, double longitude)
-        {
-            const string hereApiKey = "Gwecv9sAyqQimIdyQoM7AM8kGU21hk02I_hA5-_KKnU";
-
-            using (var client = new HttpClient())
+            for (int i = 0; i < parkingDtoList.Count; i++)
             {
-                var url = new Uri($"https://matrix.route.ls.hereapi.com/routing/7.2/calculatematrix.json?" +
-                    "apiKey={hereApiKey}" +
-                    "&mode=fastest" +
-                    "&destination0={latitude},{longitude}" +
-                    "&start0=-23.469437,-46.533096" +
-                    "&start1=-23.469709,-46.532565");
-
-                var response = await client.GetAsync(url);
-
-                string json;
-                using (var content = response.Content)
-                {
-                    json = await content.ReadAsStringAsync();
-                }
-
-                var routingResponse = JsonConvert.DeserializeObject<HereRoutingResponse>(json);
-
-                return routingResponse.response.matrixEntry;
+                var addressDetails = addressDistanceList.First(x => x.StartIndex == i);
+                parkingDtoList[i].Distance = addressDetails.Summary.Distance;
+                parkingDtoList[i].TravelTime = addressDetails.Summary.TravelTime;
+                parkingDtoList[i].CostFactor = addressDetails.Summary.CostFactor;
             }
+
+            return new ListResultDto<SearchParkingOutput>(parkingDtoList);
         }
 
         private static double GetDistance(AddressDocumentation o, double latitude, double longitude)

@@ -12,8 +12,13 @@ namespace KrakenStartup.ParkingTransactions
     [Table("PARKINGTRANSACTION")]
     public class ParkingTransaction : Entity, IHasCreationTime
     {
+        //[Key]
+        //[DatabaseGenerated(DatabaseGeneratedOption.Identity)]
+        //public int ParkingTransactionId { get; set; }
+
         [Required]
-        public ParkingTransactionStatus Status { get; set; }
+        [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
+        public ParkingTransactionStatus Status { get; set; } = ParkingTransactionStatus.Pending;
 
         [StringLength(255)]
         public string TransactionInfo { get; set; }
@@ -33,12 +38,15 @@ namespace KrakenStartup.ParkingTransactions
         public int? UserCreditCardId { get; set; }
 
         [Required]
-        public bool Enable { get; set; }
+        [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
+        public bool Enable { get; set; } = true;
 
         [Required]
-        public DateTime CreationTime { get; set; }
+        [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
+        public DateTime CreationTime { get; set; } = DateTime.UtcNow;
 
-        public DateTime? UpdatedTime { get; set; }
+        [DatabaseGenerated(DatabaseGeneratedOption.Computed)]
+        public DateTime? UpdatedTime { get; set; } = DateTime.UtcNow;
 
         [InverseProperty(nameof(RentParkings.RentParking.ParkingTransaction))]
         public virtual RentParking RentParking { get; set; }

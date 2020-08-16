@@ -16,8 +16,8 @@ namespace KrakenStartup.Migrations
                     NickName = table.Column<string>(maxLength: 50, nullable: true),
                     Type = table.Column<byte>(nullable: false),
                     Status = table.Column<byte>(nullable: false),
-                    Latitude = table.Column<string>(maxLength: 10, nullable: false),
-                    Longitude = table.Column<string>(maxLength: 10, nullable: false),
+                    Latitude = table.Column<double>(nullable: false),
+                    Longitude = table.Column<double>(nullable: false),
                     StreetName = table.Column<string>(maxLength: 100, nullable: false),
                     AddressNumber = table.Column<string>(maxLength: 5, nullable: false),
                     Complement = table.Column<string>(maxLength: 50, nullable: true),
@@ -39,6 +39,9 @@ namespace KrakenStartup.Migrations
                 {
                     Id = table.Column<int>(nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
+                    CreatorUserId = table.Column<long>(nullable: true),
+                    LastModificationTime = table.Column<DateTime>(nullable: true),
+                    LastModifierUserId = table.Column<long>(nullable: true),
                     Type = table.Column<byte>(nullable: false),
                     Name = table.Column<string>(maxLength: 50, nullable: false),
                     Credential = table.Column<string>(maxLength: 255, nullable: false),
@@ -138,7 +141,7 @@ namespace KrakenStartup.Migrations
                     Description = table.Column<string>(maxLength: 255, nullable: false),
                     AmountMoney = table.Column<decimal>(type: "decimal(5, 2)", nullable: false),
                     WalletId = table.Column<int>(nullable: false),
-                    AddressDocumentId = table.Column<int>(nullable: false),
+                    AddressDocumentationId = table.Column<int>(nullable: false),
                     Enable = table.Column<bool>(nullable: false),
                     CreationTime = table.Column<DateTime>(nullable: false),
                     UpdatedTime = table.Column<DateTime>(nullable: true)
@@ -147,8 +150,8 @@ namespace KrakenStartup.Migrations
                 {
                     table.PrimaryKey("PK_PARKING", x => x.Id);
                     table.ForeignKey(
-                        name: "FK_PARKING_ADDRESSDOCUMENTATION_AddressDocumentId",
-                        column: x => x.AddressDocumentId,
+                        name: "FK_PARKING_ADDRESSDOCUMENTATION_AddressDocumentationId",
+                        column: x => x.AddressDocumentationId,
                         principalTable: "ADDRESSDOCUMENTATION",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
@@ -166,9 +169,9 @@ namespace KrakenStartup.Migrations
                 {
                     Id = table.Column<int>(nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
-                    FirstName = table.Column<string>(maxLength: 50, nullable: true),
-                    LastName = table.Column<string>(maxLength: 50, nullable: true),
-                    Email = table.Column<string>(maxLength: 100, nullable: true),
+                    FirstName = table.Column<string>(maxLength: 50, nullable: false),
+                    LastName = table.Column<string>(maxLength: 50, nullable: false),
+                    Email = table.Column<string>(maxLength: 100, nullable: false),
                     PhoneNumber = table.Column<string>(maxLength: 20, nullable: false),
                     PhoneRegion = table.Column<byte>(nullable: false),
                     Language = table.Column<byte>(nullable: false),
@@ -415,9 +418,9 @@ namespace KrakenStartup.Migrations
                 unique: true);
 
             migrationBuilder.CreateIndex(
-                name: "IX_PARKING_AddressDocumentId",
+                name: "IX_PARKING_AddressDocumentationId",
                 table: "PARKING",
-                column: "AddressDocumentId");
+                column: "AddressDocumentationId");
 
             migrationBuilder.CreateIndex(
                 name: "IX_PARKING_WalletId",

@@ -5,7 +5,7 @@ namespace KrakenStartup.EntityFrameworkCore
     public static class DbContextOptionsConfigurer
     {
         public static void Configure(
-            DbContextOptionsBuilder<KrakenStartupDbContext> dbContextOptions, 
+            DbContextOptionsBuilder<KrakenStartupDbContext> dbContextOptions,
             string connectionString
             )
         {

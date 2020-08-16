@@ -11,6 +11,10 @@ namespace KrakenStartup.CarDocumentations
     [Table("CARDOCUMENTATION")]
     public class CarDocumentation : Entity, IHasCreationTime
     {
+        //[Key]
+        //[DatabaseGenerated(DatabaseGeneratedOption.Identity)]
+        //public int CarDocumentationId { get; set; }
+
         [StringLength(50)]
         public string NickName { get; set; }
 
@@ -18,7 +22,8 @@ namespace KrakenStartup.CarDocumentations
         public DriverDocumentationType Type { get; set; }
 
         [Required]
-        public DocumentationStatus Status { get; set; }
+        [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
+        public DocumentationStatus Status { get; set; } = DocumentationStatus.Pending;
 
         [Required]
         public DateTime ValidTime { get; set; }
@@ -35,12 +40,15 @@ namespace KrakenStartup.CarDocumentations
         public int UserId { get; set; }
 
         [Required]
-        public bool Enable { get; set; }
+        [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
+        public bool Enable { get; set; } = true;
 
         [Required]
-        public DateTime CreationTime { get; set; }
+        [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
+        public DateTime CreationTime { get; set; } = DateTime.UtcNow;
 
-        public DateTime? UpdatedTime { get; set; }
+        [DatabaseGenerated(DatabaseGeneratedOption.Computed)]
+        public DateTime? UpdatedTime { get; set; } = DateTime.UtcNow;
 
         [InverseProperty(nameof(UsersProfile.UserProfile.CarDocumentation))]
         public virtual UserProfile UserProfile { get; set; }

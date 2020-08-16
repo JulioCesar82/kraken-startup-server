@@ -2,6 +2,7 @@
 using Abp.Application.Services.Dto;
 using Abp.AutoMapper;
 using KrakenStartup.AddressDocumentations;
+using KrakenStartup.UsersWallets;
 
 namespace KrakenStartup.Parkings
 {
@@ -23,7 +24,11 @@ namespace KrakenStartup.Parkings
 
     public class SearchParkingOutput : ParkingDto
     {
-        public double Distance { get; set; }
+        public int Distance { get; set; }
+
+        public int TravelTime { get; set; }
+
+        public int CostFactor { get; set; }
     }
 
     [AutoMapTo(typeof(Parking))]
@@ -35,6 +40,8 @@ namespace KrakenStartup.Parkings
 
         public decimal AmountMoney { get; set; }
 
-        public AddressDocumentationDto AddressDocument { get; set; }
+        public UserWalletDto Wallet { get; set; }
+
+        public AddressDocumentationDto AddressDocumentation { get; set; }
     }
 }

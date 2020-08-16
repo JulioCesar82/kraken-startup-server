@@ -25,12 +25,19 @@ namespace KrakenStartup.UsersProfile
             UserVoucher = new HashSet<UserVoucher>();
         }
 
+        //[Key]
+        //[DatabaseGenerated(DatabaseGeneratedOption.Identity)]
+        //public int UserId { get; set; }
+        
+        [Required]
         [StringLength(50)]
         public string FirstName { get; set; }
 
+        [Required]
         [StringLength(50)]
         public string LastName { get; set; }
 
+        [Required]
         [StringLength(100)]
         public string Email { get; set; }
 
@@ -44,9 +51,11 @@ namespace KrakenStartup.UsersProfile
         [Required]
         public UserProfileLanguage Language { get; set; }
 
-        public bool MultiFactor { get; set; }
+        [Required] 
+        public bool MultiFactor { get; set; } = false;
 
-        public byte LastFailedLogin { get; set; }
+        [Required]
+        public byte LastFailedLogin { get; set; } = 0;
 
         [StringLength(255)]
         public string FingerPrint { get; set; }
@@ -65,12 +74,15 @@ namespace KrakenStartup.UsersProfile
         public int UserWalletId { get; set; }
 
         [Required]
-        public bool Enable { get; set; }
+        [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
+        public bool Enable { get; set; } = true;
 
         [Required]
-        public DateTime CreationTime { get; set; }
+        [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
+        public DateTime CreationTime { get; set; } = DateTime.UtcNow;
 
-        public DateTime? UpdatedTime { get; set; }
+        [DatabaseGenerated(DatabaseGeneratedOption.Computed)]
+        public DateTime? UpdatedTime { get; set; } = DateTime.UtcNow;
 
         [InverseProperty(nameof(AddressDocumentations.AddressDocumentation.UserProfile))]
         public virtual AddressDocumentation AddressDocumentation { get; set; }

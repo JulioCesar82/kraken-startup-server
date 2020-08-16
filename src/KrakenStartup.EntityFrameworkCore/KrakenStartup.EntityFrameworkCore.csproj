@@ -15,16 +15,6 @@
     <RootNamespace>KrakenStartup</RootNamespace>
   </PropertyGroup>
   <ItemGroup>
-    <Compile Remove="Migrations\**" />
-    <EmbeddedResource Remove="Migrations\**" />
-    <None Remove="Migrations\**" />
-  </ItemGroup>
-  <ItemGroup>
-    <Compile Include="Migrations\20200813191207_Initial.cs" />
-    <Compile Include="Migrations\20200813191207_Initial.Designer.cs" />
-    <Compile Include="Migrations\KrakenStartupDbContextModelSnapshot.cs" />
-  </ItemGroup>
-  <ItemGroup>
     <ProjectReference Include="..\KrakenStartup.Core\KrakenStartup.Core.csproj" />
   </ItemGroup>
   <ItemGroup>

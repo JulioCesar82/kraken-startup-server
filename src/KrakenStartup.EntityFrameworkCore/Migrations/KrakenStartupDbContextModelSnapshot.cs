@@ -46,9 +46,11 @@ namespace KrakenStartup.Migrations
                         .HasMaxLength(50);
 
                     b.Property<DateTime>("CreationTime")
+                        .ValueGeneratedOnAdd()
                         .HasColumnType("datetime2");
 
                     b.Property<bool>("Enable")
+                        .ValueGeneratedOnAdd()
                         .HasColumnType("bit");
 
                     b.Property<double>("Latitude")
@@ -67,6 +69,7 @@ namespace KrakenStartup.Migrations
                         .HasMaxLength(50);
 
                     b.Property<byte>("Status")
+                        .ValueGeneratedOnAdd()
                         .HasColumnType("tinyint");
 
                     b.Property<string>("StreetName")
@@ -78,6 +81,7 @@ namespace KrakenStartup.Migrations
                         .HasColumnType("tinyint");
 
                     b.Property<DateTime?>("UpdatedTime")
+                        .ValueGeneratedOnAddOrUpdate()
                         .HasColumnType("datetime2");
 
                     b.HasKey("Id");
@@ -93,9 +97,11 @@ namespace KrakenStartup.Migrations
                         .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
                     b.Property<DateTime>("CreationTime")
+                        .ValueGeneratedOnAdd()
                         .HasColumnType("datetime2");
 
                     b.Property<bool>("Enable")
+                        .ValueGeneratedOnAdd()
                         .HasColumnType("bit");
 
                     b.Property<string>("Information")
@@ -108,6 +114,7 @@ namespace KrakenStartup.Migrations
                         .HasMaxLength(50);
 
                     b.Property<byte>("Status")
+                        .ValueGeneratedOnAdd()
                         .HasColumnType("tinyint");
 
                     b.Property<string>("StorageId")
@@ -118,6 +125,7 @@ namespace KrakenStartup.Migrations
                         .HasColumnType("tinyint");
 
                     b.Property<DateTime?>("UpdatedTime")
+                        .ValueGeneratedOnAddOrUpdate()
                         .HasColumnType("datetime2");
 
                     b.Property<int>("UserId")
@@ -142,7 +150,11 @@ namespace KrakenStartup.Migrations
                         .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
                     b.Property<DateTime>("CreationTime")
+                        .ValueGeneratedOnAdd()
                         .HasColumnType("datetime2");
+
+                    b.Property<long?>("CreatorUserId")
+                        .HasColumnType("bigint");
 
                     b.Property<string>("Credential")
                         .IsRequired()
@@ -150,7 +162,14 @@ namespace KrakenStartup.Migrations
                         .HasMaxLength(255);
 
                     b.Property<bool>("Enable")
+                        .ValueGeneratedOnAdd()
                         .HasColumnType("bit");
+
+                    b.Property<DateTime?>("LastModificationTime")
+                        .HasColumnType("datetime2");
+
+                    b.Property<long?>("LastModifierUserId")
+                        .HasColumnType("bigint");
 
                     b.Property<string>("Name")
                         .IsRequired()
@@ -161,6 +180,7 @@ namespace KrakenStartup.Migrations
                         .HasColumnType("tinyint");
 
                     b.Property<DateTime?>("UpdatedTime")
+                        .ValueGeneratedOnAddOrUpdate()
                         .HasColumnType("datetime2");
 
                     b.HasKey("Id");
@@ -176,9 +196,11 @@ namespace KrakenStartup.Migrations
                         .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
                     b.Property<DateTime>("CreationTime")
+                        .ValueGeneratedOnAdd()
                         .HasColumnType("datetime2");
 
                     b.Property<bool>("Enable")
+                        .ValueGeneratedOnAdd()
                         .HasColumnType("bit");
 
                     b.Property<string>("Information")
@@ -187,6 +209,7 @@ namespace KrakenStartup.Migrations
                         .HasMaxLength(255);
 
                     b.Property<byte>("Status")
+                        .ValueGeneratedOnAdd()
                         .HasColumnType("tinyint");
 
                     b.Property<string>("StorageId")
@@ -197,6 +220,7 @@ namespace KrakenStartup.Migrations
                         .HasColumnType("tinyint");
 
                     b.Property<DateTime?>("UpdatedTime")
+                        .ValueGeneratedOnAddOrUpdate()
                         .HasColumnType("datetime2");
 
                     b.Property<DateTime>("ValidTime")
@@ -215,9 +239,11 @@ namespace KrakenStartup.Migrations
                         .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
                     b.Property<DateTime>("CreationTime")
+                        .ValueGeneratedOnAdd()
                         .HasColumnType("datetime2");
 
                     b.Property<bool>("Enable")
+                        .ValueGeneratedOnAdd()
                         .HasColumnType("bit");
 
                     b.Property<string>("Information")
@@ -226,6 +252,7 @@ namespace KrakenStartup.Migrations
                         .HasMaxLength(255);
 
                     b.Property<byte>("Status")
+                        .ValueGeneratedOnAdd()
                         .HasColumnType("tinyint");
 
                     b.Property<string>("StorageId")
@@ -236,6 +263,7 @@ namespace KrakenStartup.Migrations
                         .HasColumnType("tinyint");
 
                     b.Property<DateTime?>("UpdatedTime")
+                        .ValueGeneratedOnAddOrUpdate()
                         .HasColumnType("datetime2");
 
                     b.Property<DateTime>("ValidTime")
@@ -254,12 +282,14 @@ namespace KrakenStartup.Migrations
                         .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
                     b.Property<DateTime>("CreationTime")
+                        .ValueGeneratedOnAdd()
                         .HasColumnType("datetime2");
 
                     b.Property<DateTime>("Day")
                         .HasColumnType("datetime2");
 
                     b.Property<bool>("Enable")
+                        .ValueGeneratedOnAdd()
                         .HasColumnType("bit");
 
                     b.Property<int>("ParkingId")
@@ -269,6 +299,7 @@ namespace KrakenStartup.Migrations
                         .HasColumnType("tinyint");
 
                     b.Property<DateTime?>("UpdatedTime")
+                        .ValueGeneratedOnAddOrUpdate()
                         .HasColumnType("datetime2");
 
                     b.Property<DateTime?>("ValidTime")
@@ -292,15 +323,18 @@ namespace KrakenStartup.Migrations
                         .HasColumnType("decimal(5, 2)");
 
                     b.Property<DateTime>("CreationTime")
+                        .ValueGeneratedOnAdd()
                         .HasColumnType("datetime2");
 
                     b.Property<bool>("Enable")
+                        .ValueGeneratedOnAdd()
                         .HasColumnType("bit");
 
                     b.Property<int>("RentParkingId")
                         .HasColumnType("int");
 
                     b.Property<byte>("Status")
+                        .ValueGeneratedOnAdd()
                         .HasColumnType("tinyint");
 
                     b.Property<string>("TransactionInfo")
@@ -308,6 +342,7 @@ namespace KrakenStartup.Migrations
                         .HasMaxLength(255);
 
                     b.Property<DateTime?>("UpdatedTime")
+                        .ValueGeneratedOnAddOrUpdate()
                         .HasColumnType("datetime2");
 
                     b.Property<int?>("UserCreditCardId")
@@ -334,13 +369,14 @@ namespace KrakenStartup.Migrations
                         .HasColumnType("int")
                         .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
-                    b.Property<int>("AddressDocumentId")
+                    b.Property<int>("AddressDocumentationId")
                         .HasColumnType("int");
 
                     b.Property<decimal>("AmountMoney")
                         .HasColumnType("decimal(5, 2)");
 
                     b.Property<DateTime>("CreationTime")
+                        .ValueGeneratedOnAdd()
                         .HasColumnType("datetime2");
 
                     b.Property<string>("Description")
@@ -349,6 +385,7 @@ namespace KrakenStartup.Migrations
                         .HasMaxLength(255);
 
                     b.Property<bool>("Enable")
+                        .ValueGeneratedOnAdd()
                         .HasColumnType("bit");
 
                     b.Property<string>("NickName")
@@ -356,6 +393,7 @@ namespace KrakenStartup.Migrations
                         .HasMaxLength(50);
 
                     b.Property<DateTime?>("UpdatedTime")
+                        .ValueGeneratedOnAddOrUpdate()
                         .HasColumnType("datetime2");
 
                     b.Property<int>("WalletId")
@@ -363,7 +401,7 @@ namespace KrakenStartup.Migrations
 
                     b.HasKey("Id");
 
-                    b.HasIndex("AddressDocumentId");
+                    b.HasIndex("AddressDocumentationId");
 
                     b.HasIndex("WalletId");
 
@@ -381,6 +419,7 @@ namespace KrakenStartup.Migrations
                         .HasColumnType("decimal(5, 2)");
 
                     b.Property<DateTime>("CreationTime")
+                        .ValueGeneratedOnAdd()
                         .HasColumnType("datetime2");
 
                     b.Property<DateTime>("Day")
@@ -399,9 +438,11 @@ namespace KrakenStartup.Migrations
                         .HasColumnType("datetime2");
 
                     b.Property<byte>("Status")
+                        .ValueGeneratedOnAdd()
                         .HasColumnType("tinyint");
 
                     b.Property<DateTime?>("UpdatedTime")
+                        .ValueGeneratedOnAddOrUpdate()
                         .HasColumnType("datetime2");
 
                     b.Property<int>("UserId")
@@ -429,12 +470,14 @@ namespace KrakenStartup.Migrations
                         .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
                     b.Property<DateTime>("CreationTime")
+                        .ValueGeneratedOnAdd()
                         .HasColumnType("datetime2");
 
                     b.Property<int>("CreditCardId")
                         .HasColumnType("int");
 
                     b.Property<bool>("Enable")
+                        .ValueGeneratedOnAdd()
                         .HasColumnType("bit");
 
                     b.Property<string>("Information")
@@ -447,9 +490,11 @@ namespace KrakenStartup.Migrations
                         .HasMaxLength(50);
 
                     b.Property<byte>("Status")
+                        .ValueGeneratedOnAdd()
                         .HasColumnType("tinyint");
 
                     b.Property<DateTime?>("UpdatedTime")
+                        .ValueGeneratedOnAddOrUpdate()
                         .HasColumnType("datetime2");
 
                     b.Property<int>("UserId")
@@ -478,16 +523,19 @@ namespace KrakenStartup.Migrations
                         .HasColumnType("int");
 
                     b.Property<DateTime>("CreationTime")
+                        .ValueGeneratedOnAdd()
                         .HasColumnType("datetime2");
 
                     b.Property<int?>("DriverDocumentationId")
                         .HasColumnType("int");
 
                     b.Property<string>("Email")
+                        .IsRequired()
                         .HasColumnType("nvarchar(100)")
                         .HasMaxLength(100);
 
                     b.Property<bool>("Enable")
+                        .ValueGeneratedOnAdd()
                         .HasColumnType("bit");
 
                     b.Property<string>("FingerPrint")
@@ -495,6 +543,7 @@ namespace KrakenStartup.Migrations
                         .HasMaxLength(255);
 
                     b.Property<string>("FirstName")
+                        .IsRequired()
                         .HasColumnType("nvarchar(50)")
                         .HasMaxLength(50);
 
@@ -508,6 +557,7 @@ namespace KrakenStartup.Migrations
                         .HasColumnType("tinyint");
 
                     b.Property<string>("LastName")
+                        .IsRequired()
                         .HasColumnType("nvarchar(50)")
                         .HasMaxLength(50);
 
@@ -523,6 +573,7 @@ namespace KrakenStartup.Migrations
                         .HasColumnType("tinyint");
 
                     b.Property<DateTime?>("UpdatedTime")
+                        .ValueGeneratedOnAddOrUpdate()
                         .HasColumnType("datetime2");
 
                     b.Property<int>("UserWalletId")
@@ -557,12 +608,15 @@ namespace KrakenStartup.Migrations
                         .HasColumnType("decimal(5, 2)");
 
                     b.Property<DateTime>("CreationTime")
+                        .ValueGeneratedOnAdd()
                         .HasColumnType("datetime2");
 
                     b.Property<byte>("Status")
+                        .ValueGeneratedOnAdd()
                         .HasColumnType("tinyint");
 
                     b.Property<DateTime?>("UpdatedTime")
+                        .ValueGeneratedOnAddOrUpdate()
                         .HasColumnType("datetime2");
 
                     b.Property<int>("UserId")
@@ -591,15 +645,18 @@ namespace KrakenStartup.Migrations
                         .HasColumnType("decimal(5, 2)");
 
                     b.Property<DateTime>("CreationTime")
+                        .ValueGeneratedOnAdd()
                         .HasColumnType("datetime2");
 
                     b.Property<byte>("CurrencyType")
                         .HasColumnType("tinyint");
 
                     b.Property<bool>("Enable")
+                        .ValueGeneratedOnAdd()
                         .HasColumnType("bit");
 
                     b.Property<DateTime?>("UpdatedTime")
+                        .ValueGeneratedOnAddOrUpdate()
                         .HasColumnType("datetime2");
 
                     b.HasKey("Id");
@@ -618,9 +675,11 @@ namespace KrakenStartup.Migrations
                         .HasColumnType("decimal(5, 2)");
 
                     b.Property<DateTime>("CreationTime")
+                        .ValueGeneratedOnAdd()
                         .HasColumnType("datetime2");
 
                     b.Property<bool>("Enable")
+                        .ValueGeneratedOnAdd()
                         .HasColumnType("bit");
 
                     b.Property<int?>("MinimumPurchaseValue")
@@ -633,6 +692,7 @@ namespace KrakenStartup.Migrations
                         .HasColumnType("bit");
 
                     b.Property<DateTime?>("UpdatedTime")
+                        .ValueGeneratedOnAddOrUpdate()
                         .HasColumnType("datetime2");
 
                     b.Property<DateTime?>("ValidTime")
@@ -682,7 +742,7 @@ namespace KrakenStartup.Migrations
                 {
                     b.HasOne("KrakenStartup.AddressDocumentations.AddressDocumentation", "AddressDocumentation")
                         .WithMany("Parking")
-                        .HasForeignKey("AddressDocumentId")
+                        .HasForeignKey("AddressDocumentationId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 

@@ -17,6 +17,10 @@ namespace KrakenStartup.ParkingSchedules
             RentParking = new HashSet<RentParking>();
         }
 
+        //[Key]
+        //[DatabaseGenerated(DatabaseGeneratedOption.Identity)]
+        //public int ParkingScheduleId { get; set; }
+
         [Required]
         public DateTime Day { get; set; }
         
@@ -30,12 +34,15 @@ namespace KrakenStartup.ParkingSchedules
         public int ParkingId { get; set; }
 
         [Required]
-        public bool Enable { get; set; }
+        [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
+        public bool Enable { get; set; } = true;
 
         [Required]
-        public DateTime CreationTime { get; set; }
+        [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
+        public DateTime CreationTime { get; set; } = DateTime.UtcNow;
 
-        public DateTime? UpdatedTime { get; set; }
+        [DatabaseGenerated(DatabaseGeneratedOption.Computed)]
+        public DateTime? UpdatedTime { get; set; } = DateTime.UtcNow;
 
         [InverseProperty("ParkingSchedule")]
         public virtual Parking Parking { get; set; }

@@ -19,6 +19,10 @@ namespace KrakenStartup.UsersWallets
             ParkingTransaction = new HashSet<ParkingTransaction>();
         }
 
+        //[Key]
+        //[DatabaseGenerated(DatabaseGeneratedOption.Identity)]
+        //public int UserWalletId { get; set; }
+
         [Required]
         [Column(TypeName = "decimal(5, 2)")]
         public decimal AmountMoney { get; set; }
@@ -27,12 +31,15 @@ namespace KrakenStartup.UsersWallets
         public UserWalletCurrencyType CurrencyType { get; set; }
 
         [Required]
-        public bool Enable { get; set; }
+        [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
+        public bool Enable { get; set; } = true;
 
         [Required]
-        public DateTime CreationTime { get; set; }
+        [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
+        public DateTime CreationTime { get; set; } = DateTime.UtcNow;
 
-        public DateTime? UpdatedTime { get; set; }
+        [DatabaseGenerated(DatabaseGeneratedOption.Computed)]
+        public DateTime? UpdatedTime { get; set; } = DateTime.UtcNow;
 
         [InverseProperty(nameof(UsersProfile.UserProfile.UserWallet))]
         public virtual UserProfile UserProfile { get; set; }
