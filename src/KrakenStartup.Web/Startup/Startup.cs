@@ -1,16 +1,18 @@
-﻿    using System;
+﻿using System;
 using Abp.AspNetCore;
 using Abp.Castle.Logging.Log4Net;
 using Abp.EntityFrameworkCore;
+using Castle.Core.Logging;
 using KrakenStartup.EntityFrameworkCore;
 using Castle.Facilities.Logging;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
-using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Logging;
 using Microsoft.OpenApi.Models;
+using ILogger = Castle.Core.Logging.ILogger;
+using ILoggerFactory = Microsoft.Extensions.Logging.ILoggerFactory;
 
 namespace KrakenStartup.Web.Startup
 {
@@ -42,10 +44,10 @@ namespace KrakenStartup.Web.Startup
                 options.IocManager.IocContainer.AddFacility<LoggingFacility>(
                     f => f.UseAbpLog4Net().WithConfig("log4net.config")
                 );
-            });
+            }); ;
         }
 
-        public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
+        public void Configure(IApplicationBuilder app, IWebHostEnvironment env, ILogger logger)
         {
             app.UseAbp(); //Initializes ABP framework.
 
@@ -53,12 +55,12 @@ namespace KrakenStartup.Web.Startup
             {
                 app.UseDeveloperExceptionPage();
                 app.UseDatabaseErrorPage();
+                DbContextOptionsConfigurer.Logger = logger;
             }
             else
             {
                 app.UseExceptionHandler("/Error");
             }
-
 
             app.UseSwagger();
             //Enable middleware to serve swagger - ui assets(HTML, JS, CSS etc.)

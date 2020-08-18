@@ -1,7 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Net.Http;
 using System.Threading.Tasks;
 using Abp.Application.Services;
 using Abp.Application.Services.Dto;
@@ -26,22 +25,24 @@ namespace KrakenStartup.Parkings
             _parkingRepository = parkingRepository;
             _objectMapper = objectMapper;
             Logger = NullLogger.Instance;
-            //Logger.Info("GetParkingListByPerimeter");
 
             LocalizationSourceName = "Parking";
         }
 
         public async Task<ListResultDto<SearchParkingOutput>> GetParkingListByPerimeter(SearchParkingInput input)
         {
+            Logger.Info("GetParkingListByPerimeter");
+
             var entity = _parkingRepository.GetAll()
                 .Include(x => x.AddressDocumentation);
 
             //Get entities
             var parkingEntityList = await entity
-                .Where(x => GetDistance(
+                .Where(x => WherePredicate(
                     x.AddressDocumentation, 
                     input.Latitude, 
-                    input.Longitude) < input.MaxDistance)
+                    input.Longitude,
+                    input.MaxDistance))
                 .Take(input.MaxResultCount)
                 .OrderBy(x => GetDistance(
                     x.AddressDocumentation,
@@ -74,6 +75,14 @@ namespace KrakenStartup.Parkings
             }
 
             return new ListResultDto<SearchParkingOutput>(parkingDtoList);
+        }
+
+        private static bool WherePredicate(AddressDocumentation o, double latitude, double longitude, double maxDistance)
+        {
+            var distance = GetDistance(o, latitude, longitude);
+
+            return
+                distance <= maxDistance;
         }
 
         private static double GetDistance(AddressDocumentation o, double latitude, double longitude)
