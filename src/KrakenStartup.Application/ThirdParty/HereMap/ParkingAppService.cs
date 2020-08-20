@@ -8,7 +8,7 @@ namespace KrakenStartup.ThirdParty.HereMap
 {
     public static class HereMapService
     {
-        private static readonly string hereApiKey = "Gwecv9sAyqQimIdyQoM7AM8kGU21hk02I_hA5-_KKnU";
+        private static readonly string HereApiKey = "Gwecv9sAyqQimIdyQoM7AM8kGU21hk02I_hA5-_KKnU";
 
         public static async Task<List<MatrixEntry>> GetDistanceByHereApi(double latitude, double longitude, List<HereAddressLocalization> originAddressList)
         {
@@ -22,7 +22,7 @@ namespace KrakenStartup.ThirdParty.HereMap
             using (var client = new HttpClient())
             {
                 var url = new Uri("https://matrix.route.ls.hereapi.com/routing/7.2/calculatematrix.json?" +
-                                  $"apiKey={hereApiKey}" +
+                                  $"apiKey={HereApiKey}" +
                                   "&mode=fastest;pedestrian" +
                                   "&summaryAttributes=traveltime,distance" +
                                   $"&destination0={latitude},{longitude}" +

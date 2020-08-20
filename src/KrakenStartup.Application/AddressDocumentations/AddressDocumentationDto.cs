@@ -1,5 +1,7 @@
-﻿using Abp.Application.Services.Dto;
+﻿using System;
+using Abp.Application.Services.Dto;
 using Abp.AutoMapper;
+using KrakenStartup.Enums;
 
 namespace KrakenStartup.AddressDocumentations
 {
@@ -10,13 +12,15 @@ namespace KrakenStartup.AddressDocumentations
 
         public AddressDocumentationType Type { get; set; }
 
+        public DocumentationStatus Status { get; set; }
+
         public double Latitude { get; set; }
 
         public double Longitude { get; set; }
 
         public string StreetName { get; set; }
 
-        public string AddressNumber { get; set; }
+        public int AddressNumber { get; set; }
 
         public string Complement { get; set; }
 
@@ -25,5 +29,11 @@ namespace KrakenStartup.AddressDocumentations
         public string CityName { get; set; }
 
         public string NeighborhoodName { get; set; }
+
+        public int Enable { get; set; }
+
+        public DateTime CreationTime { get; set; }
+
+        public DateTime? UpdatedTime { get; set; }
     }
 }

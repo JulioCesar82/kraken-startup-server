@@ -14,18 +14,13 @@ namespace KrakenStartup.RentParkings
     [Table("RENTPARKING")]
     public class RentParking : Entity, IHasCreationTime
     {
-        public RentParking()
-        {
-            ParkingTransaction = new HashSet<ParkingTransaction>();
-        }
-
         //[Key]
         //[DatabaseGenerated(DatabaseGeneratedOption.Identity)]
         //public int RentParkingId { get; set; }
 
         [Required]
-        [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
-        public RentParkingStatus Status { get; set; } = RentParkingStatus.Pending;
+        //[DatabaseGenerated(DatabaseGeneratedOption.Identity)]
+        public RentParkingStatus Status { get; set; }
 
         [Required]
         public byte PercentageTime { get; set; }
@@ -55,11 +50,11 @@ namespace KrakenStartup.RentParkings
         public int? UserVoucherId { get; set; }
 
         [Required]
-        [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
-        public DateTime CreationTime { get; set; } = DateTime.UtcNow;
+        //[DatabaseGenerated(DatabaseGeneratedOption.Identity)]
+        public DateTime CreationTime { get; set; }
 
-        [DatabaseGenerated(DatabaseGeneratedOption.Computed)]
-        public DateTime? UpdatedTime { get; set; } = DateTime.UtcNow;
+        //[DatabaseGenerated(DatabaseGeneratedOption.Computed)]
+        public DateTime? UpdatedTime { get; set; }
 
         [InverseProperty(nameof(ParkingSchedules.ParkingSchedule.RentParking))]
         public virtual ParkingSchedule ParkingSchedule { get; set; }

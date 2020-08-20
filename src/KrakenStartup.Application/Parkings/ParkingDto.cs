@@ -1,4 +1,5 @@
-﻿using System.ComponentModel.DataAnnotations;
+﻿using System;
+using System.ComponentModel.DataAnnotations;
 using Abp.Application.Services.Dto;
 using Abp.AutoMapper;
 using KrakenStartup.AddressDocumentations;
@@ -43,5 +44,11 @@ namespace KrakenStartup.Parkings
         public UserWalletDto Wallet { get; set; }
 
         public AddressDocumentationDto AddressDocumentation { get; set; }
+
+        public int Enable { get; set; }
+
+        public DateTime CreationTime { get; set; }
+
+        public DateTime? UpdatedTime { get; set; }
     }
 }

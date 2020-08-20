@@ -18,13 +18,6 @@ namespace KrakenStartup.UsersProfile
     [Table("USERPROFILE")]
     public class UserProfile : Entity, IHasCreationTime
     {
-        public UserProfile()
-        {
-            RentParking = new HashSet<RentParking>();
-            UserCreditCard = new HashSet<UserCreditCard>();
-            UserVoucher = new HashSet<UserVoucher>();
-        }
-
         //[Key]
         //[DatabaseGenerated(DatabaseGeneratedOption.Identity)]
         //public int UserId { get; set; }
@@ -52,10 +45,10 @@ namespace KrakenStartup.UsersProfile
         public UserProfileLanguage Language { get; set; }
 
         [Required] 
-        public bool MultiFactor { get; set; } = false;
+        public bool MultiFactor { get; set; }
 
         [Required]
-        public byte LastFailedLogin { get; set; } = 0;
+        public byte LastFailedLogin { get; set; }
 
         [StringLength(255)]
         public string FingerPrint { get; set; }
@@ -74,15 +67,16 @@ namespace KrakenStartup.UsersProfile
         public int UserWalletId { get; set; }
 
         [Required]
-        [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
-        public bool Enable { get; set; } = true;
+        [Range(0, 1)]
+        //[DatabaseGenerated(DatabaseGeneratedOption.Identity)]
+        public int Enable { get; set; }
 
         [Required]
-        [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
-        public DateTime CreationTime { get; set; } = DateTime.UtcNow;
+        //[DatabaseGenerated(DatabaseGeneratedOption.Identity)]
+        public DateTime CreationTime { get; set; }
 
-        [DatabaseGenerated(DatabaseGeneratedOption.Computed)]
-        public DateTime? UpdatedTime { get; set; } = DateTime.UtcNow;
+        //[DatabaseGenerated(DatabaseGeneratedOption.Computed)]
+        public DateTime? UpdatedTime { get; set; }
 
         [InverseProperty(nameof(AddressDocumentations.AddressDocumentation.UserProfile))]
         public virtual AddressDocumentation AddressDocumentation { get; set; }

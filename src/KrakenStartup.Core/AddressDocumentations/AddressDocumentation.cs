@@ -13,12 +13,6 @@ namespace KrakenStartup.AddressDocumentations
     [Table("ADDRESSDOCUMENTATION")]
     public class AddressDocumentation : Entity, IHasCreationTime
     {
-        public AddressDocumentation()
-        {
-            Parking = new HashSet<Parking>();
-            UserProfile = new HashSet<UserProfile>();
-        }
-
         //[Key]
         //[DatabaseGenerated(DatabaseGeneratedOption.Identity)]
         //public int AddressDocumentationId { get; set; }
@@ -30,8 +24,8 @@ namespace KrakenStartup.AddressDocumentations
         public AddressDocumentationType Type { get; set; }
 
         [Required]
-        [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
-        public DocumentationStatus Status { get; set; } = DocumentationStatus.Pending;
+        //[DatabaseGenerated(DatabaseGeneratedOption.Identity)]
+        public DocumentationStatus Status { get; set; }
 
         [Required]
         public double Latitude { get; set; }
@@ -44,8 +38,8 @@ namespace KrakenStartup.AddressDocumentations
         public string StreetName { get; set; }
 
         [Required]
-        [StringLength(5)]
-        public string AddressNumber { get; set; }
+        [Range(1, 99999)]
+        public int AddressNumber { get; set; }
 
         [StringLength(50)]
         public string Complement { get; set; }
@@ -63,15 +57,16 @@ namespace KrakenStartup.AddressDocumentations
         public string NeighborhoodName { get; set; }
 
         [Required]
-        [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
-        public bool Enable { get; set; } = true;
+        [Range(0, 1)]
+        //[DatabaseGenerated(DatabaseGeneratedOption.Identity)]
+        public int Enable { get; set; }
 
         [Required]
-        [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
-        public DateTime CreationTime { get; set; } = DateTime.UtcNow;
+        //[DatabaseGenerated(DatabaseGeneratedOption.Identity)]
+        public DateTime CreationTime { get; set; }
 
-        [DatabaseGenerated(DatabaseGeneratedOption.Computed)]
-        public DateTime? UpdatedTime { get; set; } = DateTime.UtcNow;
+        //[DatabaseGenerated(DatabaseGeneratedOption.Computed)]
+        public DateTime? UpdatedTime { get; set; }
 
         [InverseProperty(nameof(Parkings.Parking.AddressDocumentation))]
         public virtual ICollection<Parking> Parking { get; set; }

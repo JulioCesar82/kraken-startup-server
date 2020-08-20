@@ -13,18 +13,13 @@ namespace KrakenStartup.UsersVouchers
     [Table("USERVOUCHER")]
     public class UserVoucher : Entity, IHasCreationTime
     {
-        public UserVoucher()
-        {
-            RentParking = new HashSet<RentParking>();
-        }
-
         //[Key]
         //[DatabaseGenerated(DatabaseGeneratedOption.Identity)]
         //public int UserVoucherId { get; set; }
 
         [Required]
-        [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
-        public UserVoucherStatus Status { get; set; } = UserVoucherStatus.Available;
+        //[DatabaseGenerated(DatabaseGeneratedOption.Identity)]
+        public UserVoucherStatus Status { get; set; }
 
         [Column(TypeName = "decimal(5, 2)")]
         public decimal? AmountMoney { get; set; }
@@ -38,11 +33,11 @@ namespace KrakenStartup.UsersVouchers
         public int VoucherId { get; set; }
 
         [Required]
-        [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
-        public DateTime CreationTime { get; set; } = DateTime.UtcNow;
+        //[DatabaseGenerated(DatabaseGeneratedOption.Identity)]
+        public DateTime CreationTime { get; set; }
 
-        [DatabaseGenerated(DatabaseGeneratedOption.Computed)]
-        public DateTime? UpdatedTime { get; set; } = DateTime.UtcNow;
+        //[DatabaseGenerated(DatabaseGeneratedOption.Computed)]
+        public DateTime? UpdatedTime { get; set; }
 
         [InverseProperty(nameof(UsersProfile.UserProfile.UserVoucher))]
         public virtual UserProfile UserProfile { get; set; }

@@ -4,7 +4,8 @@ namespace KrakenStartup
 {
     public class MyLoggerProvider : ILoggerProvider
     {
-        private Castle.Core.Logging.ILogger _logger;
+        private readonly Castle.Core.Logging.ILogger _logger;
+
         public MyLoggerProvider(Castle.Core.Logging.ILogger logger)
         {
             _logger = logger;

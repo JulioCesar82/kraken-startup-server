@@ -24,6 +24,9 @@ namespace KrakenStartup
 
                 config.CreateMap<UserWalletDto, UserWallet>();
                 config.CreateMap<UserWallet, UserWalletDto>();
+
+                config.CreateMap<SearchParkingOutput, Parking>();
+                config.CreateMap<Parking, SearchParkingOutput>();
             });
         }
 

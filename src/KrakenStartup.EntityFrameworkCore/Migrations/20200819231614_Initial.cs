@@ -19,12 +19,12 @@ namespace KrakenStartup.Migrations
                     Latitude = table.Column<double>(nullable: false),
                     Longitude = table.Column<double>(nullable: false),
                     StreetName = table.Column<string>(maxLength: 100, nullable: false),
-                    AddressNumber = table.Column<string>(maxLength: 5, nullable: false),
+                    AddressNumber = table.Column<int>(nullable: false),
                     Complement = table.Column<string>(maxLength: 50, nullable: true),
                     CountryName = table.Column<string>(maxLength: 50, nullable: false),
                     CityName = table.Column<string>(maxLength: 50, nullable: false),
                     NeighborhoodName = table.Column<string>(maxLength: 50, nullable: false),
-                    Enable = table.Column<bool>(nullable: false),
+                    Enable = table.Column<int>(nullable: false),
                     CreationTime = table.Column<DateTime>(nullable: false),
                     UpdatedTime = table.Column<DateTime>(nullable: true)
                 },
@@ -45,7 +45,7 @@ namespace KrakenStartup.Migrations
                     Type = table.Column<byte>(nullable: false),
                     Name = table.Column<string>(maxLength: 50, nullable: false),
                     Credential = table.Column<string>(maxLength: 255, nullable: false),
-                    Enable = table.Column<bool>(nullable: false),
+                    Enable = table.Column<int>(nullable: false),
                     CreationTime = table.Column<DateTime>(nullable: false),
                     UpdatedTime = table.Column<DateTime>(nullable: true)
                 },
@@ -65,7 +65,7 @@ namespace KrakenStartup.Migrations
                     ValidTime = table.Column<DateTime>(nullable: false),
                     Information = table.Column<string>(maxLength: 255, nullable: false),
                     StorageId = table.Column<string>(maxLength: 255, nullable: true),
-                    Enable = table.Column<bool>(nullable: false),
+                    Enable = table.Column<int>(nullable: false),
                     CreationTime = table.Column<DateTime>(nullable: false),
                     UpdatedTime = table.Column<DateTime>(nullable: true)
                 },
@@ -85,7 +85,7 @@ namespace KrakenStartup.Migrations
                     ValidTime = table.Column<DateTime>(nullable: false),
                     Information = table.Column<string>(maxLength: 255, nullable: false),
                     StorageId = table.Column<string>(maxLength: 255, nullable: true),
-                    Enable = table.Column<bool>(nullable: false),
+                    Enable = table.Column<int>(nullable: false),
                     CreationTime = table.Column<DateTime>(nullable: false),
                     UpdatedTime = table.Column<DateTime>(nullable: true)
                 },
@@ -102,7 +102,7 @@ namespace KrakenStartup.Migrations
                         .Annotation("SqlServer:Identity", "1, 1"),
                     AmountMoney = table.Column<decimal>(type: "decimal(5, 2)", nullable: false),
                     CurrencyType = table.Column<byte>(nullable: false),
-                    Enable = table.Column<bool>(nullable: false),
+                    Enable = table.Column<int>(nullable: false),
                     CreationTime = table.Column<DateTime>(nullable: false),
                     UpdatedTime = table.Column<DateTime>(nullable: true)
                 },
@@ -122,7 +122,7 @@ namespace KrakenStartup.Migrations
                     MinimumPurchaseValue = table.Column<int>(nullable: true),
                     ValidTime = table.Column<DateTime>(nullable: true),
                     SingleUse = table.Column<bool>(nullable: false),
-                    Enable = table.Column<bool>(nullable: false),
+                    Enable = table.Column<int>(nullable: false),
                     CreationTime = table.Column<DateTime>(nullable: false),
                     UpdatedTime = table.Column<DateTime>(nullable: true)
                 },
@@ -142,7 +142,7 @@ namespace KrakenStartup.Migrations
                     AmountMoney = table.Column<decimal>(type: "decimal(5, 2)", nullable: false),
                     WalletId = table.Column<int>(nullable: false),
                     AddressDocumentationId = table.Column<int>(nullable: false),
-                    Enable = table.Column<bool>(nullable: false),
+                    Enable = table.Column<int>(nullable: false),
                     CreationTime = table.Column<DateTime>(nullable: false),
                     UpdatedTime = table.Column<DateTime>(nullable: true)
                 },
@@ -182,7 +182,7 @@ namespace KrakenStartup.Migrations
                     DriverDocumentationId = table.Column<int>(nullable: true),
                     AddressDocumentationId = table.Column<int>(nullable: true),
                     UserWalletId = table.Column<int>(nullable: false),
-                    Enable = table.Column<bool>(nullable: false),
+                    Enable = table.Column<int>(nullable: false),
                     CreationTime = table.Column<DateTime>(nullable: false),
                     UpdatedTime = table.Column<DateTime>(nullable: true)
                 },
@@ -225,7 +225,7 @@ namespace KrakenStartup.Migrations
                     Repetition = table.Column<byte>(nullable: false),
                     ValidTime = table.Column<DateTime>(nullable: true),
                     ParkingId = table.Column<int>(nullable: false),
-                    Enable = table.Column<bool>(nullable: false),
+                    Enable = table.Column<int>(nullable: false),
                     CreationTime = table.Column<DateTime>(nullable: false),
                     UpdatedTime = table.Column<DateTime>(nullable: true)
                 },
@@ -253,7 +253,7 @@ namespace KrakenStartup.Migrations
                     Information = table.Column<string>(maxLength: 255, nullable: false),
                     StorageId = table.Column<string>(maxLength: 255, nullable: true),
                     UserId = table.Column<int>(nullable: false),
-                    Enable = table.Column<bool>(nullable: false),
+                    Enable = table.Column<int>(nullable: false),
                     CreationTime = table.Column<DateTime>(nullable: false),
                     UpdatedTime = table.Column<DateTime>(nullable: true)
                 },
@@ -280,7 +280,7 @@ namespace KrakenStartup.Migrations
                     Information = table.Column<string>(maxLength: 255, nullable: false),
                     UserId = table.Column<int>(nullable: false),
                     CreditCardId = table.Column<int>(nullable: false),
-                    Enable = table.Column<bool>(nullable: false),
+                    Enable = table.Column<int>(nullable: false),
                     CreationTime = table.Column<DateTime>(nullable: false),
                     UpdatedTime = table.Column<DateTime>(nullable: true)
                 },
@@ -384,7 +384,7 @@ namespace KrakenStartup.Migrations
                     RentParkingId = table.Column<int>(nullable: false),
                     UserWalletId = table.Column<int>(nullable: true),
                     UserCreditCardId = table.Column<int>(nullable: true),
-                    Enable = table.Column<bool>(nullable: false),
+                    Enable = table.Column<int>(nullable: false),
                     CreationTime = table.Column<DateTime>(nullable: false),
                     UpdatedTime = table.Column<DateTime>(nullable: true)
                 },

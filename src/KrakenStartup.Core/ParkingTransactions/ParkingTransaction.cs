@@ -17,8 +17,8 @@ namespace KrakenStartup.ParkingTransactions
         //public int ParkingTransactionId { get; set; }
 
         [Required]
-        [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
-        public ParkingTransactionStatus Status { get; set; } = ParkingTransactionStatus.Pending;
+        //[DatabaseGenerated(DatabaseGeneratedOption.Identity)]
+        public ParkingTransactionStatus Status { get; set; }
 
         [StringLength(255)]
         public string TransactionInfo { get; set; }
@@ -38,15 +38,16 @@ namespace KrakenStartup.ParkingTransactions
         public int? UserCreditCardId { get; set; }
 
         [Required]
-        [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
-        public bool Enable { get; set; } = true;
+        [Range(0, 1)]
+        //[DatabaseGenerated(DatabaseGeneratedOption.Identity)]
+        public int Enable { get; set; }
 
         [Required]
-        [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
-        public DateTime CreationTime { get; set; } = DateTime.UtcNow;
+        //[DatabaseGenerated(DatabaseGeneratedOption.Identity)]
+        public DateTime CreationTime { get; set; }
 
-        [DatabaseGenerated(DatabaseGeneratedOption.Computed)]
-        public DateTime? UpdatedTime { get; set; } = DateTime.UtcNow;
+        //[DatabaseGenerated(DatabaseGeneratedOption.Computed)]
+        public DateTime? UpdatedTime { get; set; }
 
         [InverseProperty(nameof(RentParkings.RentParking.ParkingTransaction))]
         public virtual RentParking RentParking { get; set; }

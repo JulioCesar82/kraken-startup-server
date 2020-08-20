@@ -12,11 +12,6 @@ namespace KrakenStartup.ParkingSchedules
     [Table("PARKINGSCHEDULE")]
     public class ParkingSchedule : Entity, IHasCreationTime
     {
-        public ParkingSchedule()
-        {
-            RentParking = new HashSet<RentParking>();
-        }
-
         //[Key]
         //[DatabaseGenerated(DatabaseGeneratedOption.Identity)]
         //public int ParkingScheduleId { get; set; }
@@ -34,15 +29,16 @@ namespace KrakenStartup.ParkingSchedules
         public int ParkingId { get; set; }
 
         [Required]
-        [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
-        public bool Enable { get; set; } = true;
+        [Range(0, 1)]
+        //[DatabaseGenerated(DatabaseGeneratedOption.Identity)]
+        public int Enable { get; set; }
 
         [Required]
-        [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
-        public DateTime CreationTime { get; set; } = DateTime.UtcNow;
+        //[DatabaseGenerated(DatabaseGeneratedOption.Identity)]
+        public DateTime CreationTime { get; set; }
 
-        [DatabaseGenerated(DatabaseGeneratedOption.Computed)]
-        public DateTime? UpdatedTime { get; set; } = DateTime.UtcNow;
+        //[DatabaseGenerated(DatabaseGeneratedOption.Computed)]
+        public DateTime? UpdatedTime { get; set; }
 
         [InverseProperty("ParkingSchedule")]
         public virtual Parking Parking { get; set; }

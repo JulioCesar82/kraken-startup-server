@@ -18,7 +18,8 @@ namespace KrakenStartup.EntityFrameworkCore
             dbContextOptions
                 .UseLoggerFactory(GetDbLoggerFactory())
                 .EnableSensitiveDataLogging()
-                .UseSqlServer(connectionString);
+                .EnableDetailedErrors()
+                .UseSqlServer(connectionString, b => b.MaxBatchSize(1));
         }
 
         private static LoggerFactory GetDbLoggerFactory()

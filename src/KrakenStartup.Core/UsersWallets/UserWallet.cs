@@ -13,12 +13,6 @@ namespace KrakenStartup.UsersWallets
     [Table("USERWALLET")]
     public class UserWallet : Entity, IHasCreationTime
     {
-        public UserWallet()
-        {
-            Parking = new HashSet<Parking>();
-            ParkingTransaction = new HashSet<ParkingTransaction>();
-        }
-
         //[Key]
         //[DatabaseGenerated(DatabaseGeneratedOption.Identity)]
         //public int UserWalletId { get; set; }
@@ -31,15 +25,16 @@ namespace KrakenStartup.UsersWallets
         public UserWalletCurrencyType CurrencyType { get; set; }
 
         [Required]
-        [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
-        public bool Enable { get; set; } = true;
+        [Range(0, 1)]
+        //[DatabaseGenerated(DatabaseGeneratedOption.Identity)]
+        public int Enable { get; set; }
 
         [Required]
-        [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
-        public DateTime CreationTime { get; set; } = DateTime.UtcNow;
+        //[DatabaseGenerated(DatabaseGeneratedOption.Identity)]
+        public DateTime CreationTime { get; set; }
 
-        [DatabaseGenerated(DatabaseGeneratedOption.Computed)]
-        public DateTime? UpdatedTime { get; set; } = DateTime.UtcNow;
+        //[DatabaseGenerated(DatabaseGeneratedOption.Computed)]
+        public DateTime? UpdatedTime { get; set; }
 
         [InverseProperty(nameof(UsersProfile.UserProfile.UserWallet))]
         public virtual UserProfile UserProfile { get; set; }

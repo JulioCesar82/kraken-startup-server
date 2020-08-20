@@ -29,75 +29,109 @@ namespace KrakenStartup.Parkings
             LocalizationSourceName = "Parking";
         }
 
+        public async Task<ParkingDto> CreateTestAsync(ParkingDto input)
+        {
+            try
+            {
+                CheckCreatePermission();
+
+                var entity = MapToEntity(input);
+
+                await Repository.InsertAsync(entity);
+                await CurrentUnitOfWork.SaveChangesAsync();
+
+                return MapToEntityDto(entity);
+            }
+            catch (Exception e)
+            {
+                Console.WriteLine(e);
+                throw;
+            }
+        }
+
         public async Task<ListResultDto<SearchParkingOutput>> GetParkingListByPerimeter(SearchParkingInput input)
         {
             Logger.Info("GetParkingListByPerimeter");
 
-            var entity = _parkingRepository.GetAll()
-                .Include(x => x.AddressDocumentation);
-
-            //Get entities
-            var parkingEntityList = await entity
-                .Where(x => WherePredicate(
-                    x.AddressDocumentation, 
-                    input.Latitude, 
-                    input.Longitude,
-                    input.MaxDistance))
-                .Take(input.MaxResultCount)
-                .OrderBy(x => GetDistance(
-                    x.AddressDocumentation,
-                    input.Latitude,
-                    input.Longitude))
-                .ToListAsync();
-
-            if (parkingEntityList.Count == 0)
+            try
             {
-                return new ListResultDto<SearchParkingOutput>();
+                //Get entities
+                var parkingEntityList = await _parkingRepository.GetAll()
+                    .Include(x => x.AddressDocumentation)
+                    .ToListAsync();
+
+                parkingEntityList = parkingEntityList
+                    .Where(x => WherePredicate(
+                        x.AddressDocumentation,
+                        input.Latitude,
+                        input.Longitude,
+                        input.MaxDistance))
+                    .Take(input.MaxResultCount)
+                    .OrderBy(x => GetDistance(
+                        x.AddressDocumentation,
+                        input.Latitude,
+                        input.Longitude,
+                        input.MaxDistance))
+                    .ToList();
+
+                if (parkingEntityList.Count == 0)
+                {
+                    return new ListResultDto<SearchParkingOutput>();
+                }
+
+                var addressLocalizationList = parkingEntityList.Select(x => new HereAddressLocalization
+                    {
+                        Latitude = x.AddressDocumentation.Latitude,
+                        Longitude = x.AddressDocumentation.Longitude
+                    })
+                    .ToList();
+
+                var addressDistanceList = await HereMapService.GetDistanceByHereApi(input.Latitude, input.Longitude, addressLocalizationList);
+
+                //Convert to DTOs
+                var parkingDtoList = _objectMapper.Map<List<SearchParkingOutput>>(parkingEntityList);
+
+                for (int i = 0; i < parkingDtoList.Count; i++)
+                {
+                    var addressDetails = addressDistanceList.First(x => x.StartIndex == i);
+                    parkingDtoList[i].Distance = addressDetails.Summary.Distance;
+                    parkingDtoList[i].TravelTime = addressDetails.Summary.TravelTime;
+                    parkingDtoList[i].CostFactor = addressDetails.Summary.CostFactor;
+                }
+
+                return new ListResultDto<SearchParkingOutput>(parkingDtoList);
             }
-
-            var addressLocalizationList = parkingEntityList.Select(x => new HereAddressLocalization {
-                    Latitude = x.AddressDocumentation.Latitude,
-                    Longitude = x.AddressDocumentation.Longitude
-                })
-                .ToList();
-
-            var addressDistanceList = await HereMapService.GetDistanceByHereApi(input.Latitude, input.Longitude, addressLocalizationList);
-
-            //Convert to DTOs
-            var parkingDtoList = _objectMapper.Map<List<SearchParkingOutput>>(parkingEntityList);
-
-            for (int i = 0; i < parkingDtoList.Count; i++)
+            catch (Exception e)
             {
-                var addressDetails = addressDistanceList.First(x => x.StartIndex == i);
-                parkingDtoList[i].Distance = addressDetails.Summary.Distance;
-                parkingDtoList[i].TravelTime = addressDetails.Summary.TravelTime;
-                parkingDtoList[i].CostFactor = addressDetails.Summary.CostFactor;
+                Console.WriteLine(e);
+                throw;
             }
-
-            return new ListResultDto<SearchParkingOutput>(parkingDtoList);
         }
 
         private static bool WherePredicate(AddressDocumentation o, double latitude, double longitude, double maxDistance)
         {
-            var distance = GetDistance(o, latitude, longitude);
+            var distance = GetDistance(o, latitude, longitude, maxDistance);
 
             return
                 distance <= maxDistance;
         }
 
-        private static double GetDistance(AddressDocumentation o, double latitude, double longitude)
+        private static double GetDistance(AddressDocumentation o, double latitude, double longitude, double maxDistance)
         {
             // KM or ML
             // Kilometers 6378.137
             // Miles 3963.191
             var radius = 6378.137;
 
-            var distance = radius * Math.Acos(Math.Cos(ConvertToRadians(latitude)) *
-                                              Math.Cos(ConvertToRadians(o.Latitude)) *
-                                              Math.Cos(ConvertToRadians(o.Longitude) - ConvertToRadians(longitude)) +
-                                              Math.Sin(ConvertToRadians(latitude) *
-                                                       Math.Sin(ConvertToRadians(o.Latitude))));
-            return distance;
+            var distance = radius * maxDistance *
+                           Math.Acos(
+                               Math.Cos(ConvertToRadians(latitude)) *
+                               Math.Cos(ConvertToRadians(o.Latitude)) *
+                               Math.Cos(ConvertToRadians(o.Longitude) - ConvertToRadians(longitude)) +
+                               Math.Sin(ConvertToRadians(latitude)) *
+                               Math.Sin(ConvertToRadians(o.Latitude))
+                               );
+            return !Double.IsNaN(distance) ? distance : 0.0;
         }
 
         public static double ConvertToRadians(double angle)

@@ -10,11 +10,6 @@ namespace KrakenStartup.CreditCards
     [Table("CREDITCARD")]
     public class CreditCard : AuditedEntity, IHasCreationTime
     {
-        public CreditCard()
-        {
-            UserCreditCard = new HashSet<UserCreditCard>();
-        }
-
         //[Key]
         //[DatabaseGenerated(DatabaseGeneratedOption.Identity)]
         //public int CreditCardId { get; set; }
@@ -31,15 +26,16 @@ namespace KrakenStartup.CreditCards
         public string Credential { get; set; }
 
         [Required]
-        [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
-        public bool Enable { get; set; } = true;
+        [Range(0, 1)]
+        //[DatabaseGenerated(DatabaseGeneratedOption.Identity)]
+        public int Enable { get; set; }
 
         [Required]
-        [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
-        public DateTime CreationTime { get; set; } = DateTime.UtcNow;
+        //[DatabaseGenerated(DatabaseGeneratedOption.Identity)]
+        public DateTime CreationTime { get; set; }
 
-        [DatabaseGenerated(DatabaseGeneratedOption.Computed)]
-        public DateTime? UpdatedTime { get; set; } = DateTime.UtcNow;
+        //[DatabaseGenerated(DatabaseGeneratedOption.Computed)]
+        public DateTime? UpdatedTime { get; set; }
 
         [InverseProperty(nameof(UsersCreditCards.UserCreditCard.CreditCard))]
         public virtual ICollection<UserCreditCard> UserCreditCard { get; set; }

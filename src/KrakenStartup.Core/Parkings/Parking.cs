@@ -13,11 +13,6 @@ namespace KrakenStartup.Parkings
     [Table("PARKING")]
     public class Parking : Entity, IHasCreationTime
     {
-        public Parking()
-        {
-            ParkingSchedule = new HashSet<ParkingSchedule>();
-        }
-
         //[Key]
         //[DatabaseGenerated(DatabaseGeneratedOption.Identity)]
         //public int? ParkingId { get; set; }
@@ -42,15 +37,16 @@ namespace KrakenStartup.Parkings
         public int AddressDocumentationId { get; set; }
 
         [Required]
-        [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
-        public bool Enable { get; set; } = true;
+        [Range(0, 1)]
+        //[DatabaseGenerated(DatabaseGeneratedOption.Identity)]
+        public int Enable { get; set; }
 
         [Required]
-        [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
-        public DateTime CreationTime { get; set; } = DateTime.UtcNow;
+        //[DatabaseGenerated(DatabaseGeneratedOption.Identity)]
+        public DateTime CreationTime { get; set; }
 
-        [DatabaseGenerated(DatabaseGeneratedOption.Computed)]
-        public DateTime? UpdatedTime { get; set; } = DateTime.UtcNow;
+        //[DatabaseGenerated(DatabaseGeneratedOption.Computed)]
+        public DateTime? UpdatedTime { get; set; }
 
         [InverseProperty(nameof(AddressDocumentations.AddressDocumentation.Parking))]
         public virtual AddressDocumentation AddressDocumentation { get; set; }

@@ -14,11 +14,6 @@ namespace KrakenStartup.UsersCreditCards
     [Table("USERCREDITCARD")]
     public class UserCreditCard : Entity, IHasCreationTime
     {
-        public UserCreditCard()
-        {
-            ParkingTransaction = new HashSet<ParkingTransaction>();
-        }
-
         //[Key]
         //[DatabaseGenerated(DatabaseGeneratedOption.Identity)]
         //public int UserCreditCardId { get; set; }
@@ -27,8 +22,8 @@ namespace KrakenStartup.UsersCreditCards
         public string NickName { get; set; }
 
         [Required]
-        [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
-        public DocumentationStatus Status { get; set; } = DocumentationStatus.Pending;
+        //[DatabaseGenerated(DatabaseGeneratedOption.Identity)]
+        public DocumentationStatus Status { get; set; }
 
         [Required]
         public DateTime ValidTime { get; set; }
@@ -46,15 +41,16 @@ namespace KrakenStartup.UsersCreditCards
         public int CreditCardId { get; set; }
 
         [Required]
-        [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
-        public bool Enable { get; set; } = true;
+        [Range(0, 1)]
+        //[DatabaseGenerated(DatabaseGeneratedOption.Identity)]
+        public int Enable { get; set; }
 
         [Required]
-        [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
-        public DateTime CreationTime { get; set; } = DateTime.UtcNow;
+        //[DatabaseGenerated(DatabaseGeneratedOption.Identity)]
+        public DateTime CreationTime { get; set; }
 
-        [DatabaseGenerated(DatabaseGeneratedOption.Computed)]
-        public DateTime? UpdatedTime { get; set; } = DateTime.UtcNow;
+        //[DatabaseGenerated(DatabaseGeneratedOption.Computed)]
+        public DateTime? UpdatedTime { get; set; }
 
         [InverseProperty(nameof(CreditCards.CreditCard.UserCreditCard))]
         public virtual CreditCard CreditCard { get; set; }
