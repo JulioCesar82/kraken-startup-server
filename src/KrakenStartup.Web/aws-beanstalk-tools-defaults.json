@@ -1,0 +1,20 @@
+
+{
+    "region" : "sa-east-1",
+    "configuration" : "Debug",
+    "framework"     : "netcoreapp3.1",
+    "self-contained" : false,
+    "application"    : "KrakenStartupWeb",
+    "environment"    : "KrakenStartupWeb-dev",
+    "enable-xray"    : false,
+    "enhanced-health-type" : "basic",
+    "additional-options"   : "\"aws:autoscaling:launchconfiguration,SecurityGroups\"=\"sg-34e15952\";\"aws:ec2:vpc,Subnets\"=\"subnet-c5ae578c\"",
+    "solution-stack"       : "64bit Amazon Linux 2 v2.0.1 running .NET Core",
+    "environment-type"     : "SingleInstance",
+    "cname"                : "krakenstartupweb-dev",
+    "instance-type"        : "m1.small",
+    "key-pair"             : "",
+    "instance-profile"     : "aws-elasticbeanstalk-ec2-role",
+    "service-role"         : "aws-elasticbeanstalk-service-role",
+    "proxy-server"         : "nginx"
+}

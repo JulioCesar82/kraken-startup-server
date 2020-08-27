@@ -1,0 +1,8 @@
+
+{
+    "region" : "sa-east-1",
+    "profile" : "juliocesar",
+    "s3-bucket" : "elasticbeanstalk-sa-east-1-047663120747",
+    "template"  : "serverless.template",
+    "stack-name" : "KrakenStartup"
+}
