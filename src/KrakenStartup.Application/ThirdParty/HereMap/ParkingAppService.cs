@@ -6,10 +6,21 @@ using Newtonsoft.Json;
 
 namespace KrakenStartup.ThirdParty.HereMap
 {
+    /// <summary>
+    /// Provides services for interacting with the HERE Maps API.
+    /// </summary>
     public static class HereMapService
     {
-        private static readonly string HereApiKey = "Gwecv9sAyqQimIdyQoM7AM8kGU21hk02I_hA5-_KKnU";
+        // TODO: Move the API Key to a secure configuration file (e.g., appsettings.json) instead of hardcoding it.
+        private static readonly string HereApiKey = "XXXXXXXX";
 
+        /// <summary>
+        /// Calculates the distance and travel time from multiple origin points to a single destination using the HERE Maps Routing API.
+        /// </summary>
+        /// <param name="latitude">The latitude of the destination.</param>
+        /// <param name="longitude">The longitude of the destination.</param>
+        /// <param name="originAddressList">A list of origin addresses with their latitude and longitude.</param>
+        /// <returns>A list of matrix entries containing distance and travel time information.</returns>
         public static async Task<List<MatrixEntry>> GetDistanceByHereApi(double latitude, double longitude, List<HereAddressLocalization> originAddressList)
         {
             var originCoordinates = "";
@@ -43,9 +54,19 @@ namespace KrakenStartup.ThirdParty.HereMap
         }
     }
 
+    /// <summary>
+    /// Represents a geographical location with latitude and longitude coordinates.
+    /// </summary>
     public class HereAddressLocalization
     {
+        /// <summary>
+        /// Gets or sets the latitude of the location.
+        /// </summary>
         public double Latitude { get; set; }
+
+        /// <summary>
+        /// Gets or sets the longitude of the location.
+        /// </summary>
         public double Longitude { get; set; }
     }
 }
