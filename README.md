@@ -1,6 +1,15 @@
 # KrakenStartup
 
+![Page 01](./docs//01.png)
+
 KrakenStartup is a robust and scalable built with ASP.NET Core that is under development for completion of my Information Systems College at FIAP and based on the principles of Domain-Driven Design (DDD). It provides a solid foundation for developing modern web applications, with a clean and layered architecture that promotes separation of concerns and maintainability.
+
+
+![Page 02](./docs//02.png)
+
+![Page 03](./docs//03.png)
+
+![Page 04](./docs//04.png)
 
 ## Features
 
