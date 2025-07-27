@@ -78,3 +78,8 @@ We welcome contributions from the community! To contribute, please follow these 
 5.  **Submit a pull request** with a clear description of your changes.
 
 We appreciate your help in making this project better!
+
+## Current project team members
+
+* [JulioCesar82](https://github.com/JulioCesar82) -
+**Julio Ávila** <https://www.linkedin.com/in/juliocesar82>
